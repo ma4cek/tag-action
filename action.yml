@@ -1,11 +1,22 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "GitHub Tag"
+description: "Bump and push git tag on merge"
+author: "ma4cek"
+outputs:
 inputs:
-  milliseconds: # change this
+  github_token:
+    description: "Required for permission to tag the repo."
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  tag_prefix:
+    description: "A prefix to the tag name (default: `v`)."
+    required: false
+    default: "v"
+  fetch_all_tags:
+    description: "Boolean to fetch all tags for a repo (if false, only the last 100 will be fetched)."
+    required: false
+    default: "false"
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"
+branding:
+  icon: "git-merge"
+  color: "purple"
