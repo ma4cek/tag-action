@@ -1,7 +1,6 @@
 name: "GitHub Tag"
 description: "Bump and push git tag on merge"
 author: "ma4cek"
-outputs:
 inputs:
   github_token:
     description: "Required for permission to tag the repo."
