@@ -80,7 +80,6 @@ function main() {
         core.setOutput('previous_tag', latestTag.name);
         const cwd = process.cwd();
         let bump = yield commitAnalyzer.analyzeCommits({
-            preset: 'angular',
             releaseRules: [
                 { type: 'docs', scope: 'README', release: 'patch' },
                 { type: 'refactor', release: 'patch' },

@@ -62,7 +62,6 @@ export default async function main(): Promise<void> {
 
   let bump = await commitAnalyzer.analyzeCommits(
     {
-      preset: 'angular',
       releaseRules: [
         {type: 'docs', scope: 'README', release: 'patch'},
         {type: 'refactor', release: 'patch'},
