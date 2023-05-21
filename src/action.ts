@@ -93,14 +93,16 @@ export default async function main(): Promise<void> {
    */
 
   const changelog = await releaseNotesGenerator.generateNotes(
-    {preset: 'angular'},
     {
-      commits: commits,
-      lastRelease: {gitTag: latestTag.name},
-      nextRelease: {gitTag: newTag, version: incrementedVersion},
+      preset: 'conventionalcommits'
+    },
+    {
+      commits,
       options: {
-        repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/`
-      }
+        repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
+      },
+      lastRelease: {gitTag: latestTag.name},
+      nextRelease: {gitTag: newTag, version: incrementedVersion}
     }
   )
   core.info(`Changelog is ${changelog}.`)
