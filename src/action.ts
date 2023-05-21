@@ -59,7 +59,14 @@ export default async function main(): Promise<void> {
   core.setOutput('previous_tag', latestTag.name)
 
   let bump = await commitAnalyzer.analyzeCommits(
-    {preset: 'angular'},
+    {
+      preset: 'angular',
+      releaseRules: [
+        {type: 'docs', scope: 'README', release: 'patch'},
+        {type: 'refactor', release: 'patch'},
+        {type: 'style', release: 'patch'}
+      ]
+    },
     {commits: commits}
   )
 
