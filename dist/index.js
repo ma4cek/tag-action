@@ -70,6 +70,8 @@ function main() {
             return;
         }
         const commits = yield (0, github_1.getCommits)(latestTag.commit.sha, commitRef);
+        for (const commit of commits)
+            core.info(`Found commit: ${commit.message}.`);
         const previousVersion = (0, semver_1.parse)(latestTag.name.replace(prefixRegex, ''));
         if (!previousVersion) {
             core.setFailed('Could not parse previous tag.');

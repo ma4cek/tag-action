@@ -45,6 +45,8 @@ export default async function main(): Promise<void> {
 
   const commits = await getCommits(latestTag.commit.sha, commitRef)
 
+  for (const commit of commits) core.info(`Found commit: ${commit.message}.`)
+
   const previousVersion = parse(latestTag.name.replace(prefixRegex, ''))
 
   if (!previousVersion) {
