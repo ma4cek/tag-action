@@ -92,11 +92,12 @@ export default async function main(): Promise<void> {
    * @param {Object} context.options.repositoryUrl The git repository URL.
    */
 
-  const changelog = await releaseNotesGenerator.generateNotes(
-    {
-      preset: 'angular'
-    },
-    {
+  core.info(`GITHUB_SERVER_URL ${process.env.GITHUB_SERVER_URL}`)
+  core.info(`GITHUB_SERVER_URL ${process.env.GITHUB_REPOSITORY}`)
+
+  const changelog = await releaseNotesGenerator.generateNotes({
+    preset: 'angular',
+    context: {
       commits,
       logger: {log: core.info.bind(core.info)},
       lastRelease: {gitTag: latestTag.name},
@@ -105,7 +106,7 @@ export default async function main(): Promise<void> {
         repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
       }
     }
-  )
+  })
   core.info(`Changelog is ${changelog}.`)
   core.setOutput('changelog', changelog)
 
