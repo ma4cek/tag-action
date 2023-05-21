@@ -70,8 +70,6 @@ function main() {
             return;
         }
         const commits = yield (0, github_1.getCommits)(latestTag.commit.sha, commitRef);
-        for (const commit of commits)
-            core.info(`Found commit: ${commit.message}.`);
         const previousVersion = (0, semver_1.parse)(latestTag.name.replace(prefixRegex, ''));
         if (!previousVersion) {
             core.setFailed('Could not parse previous tag.');
@@ -108,13 +106,10 @@ function main() {
          * @param {Object} context.nextRelease The next release with `gitHead` corresponding to the commit hash used to make the  release, the release `version` and `gitTag` corresponding to the git tag associated with `gitHead`.
          * @param {Object} context.options.repositoryUrl The git repository URL.
          */
-        core.info(`GITHUB_SERVER_URL ${process.env.GITHUB_SERVER_URL}`);
-        core.info(`GITHUB_SERVER_URL ${process.env.GITHUB_REPOSITORY}`);
         const changelog = yield releaseNotesGenerator.generateNotes({
             preset: 'angular',
             context: {
-                commits,
-                logger: { log: core.info.bind(core.info) },
+                commits: commits,
                 lastRelease: { gitTag: latestTag.name },
                 nextRelease: { gitTag: newTag, version: incrementedVersion },
                 options: {

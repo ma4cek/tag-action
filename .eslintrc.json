@@ -8,6 +8,8 @@
       "project": "./tsconfig.json"
     },
     "rules": {
+      // temporarily deactivated
+      "object-shorthand": "off",
       "i18n-text/no-en": "off",
       "eslint-comments/no-use": "off",
       "import/no-namespace": "off",

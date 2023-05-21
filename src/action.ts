@@ -45,8 +45,6 @@ export default async function main(): Promise<void> {
 
   const commits = await getCommits(latestTag.commit.sha, commitRef)
 
-  for (const commit of commits) core.info(`Found commit: ${commit.message}.`)
-
   const previousVersion = parse(latestTag.name.replace(prefixRegex, ''))
 
   if (!previousVersion) {
@@ -94,14 +92,10 @@ export default async function main(): Promise<void> {
    * @param {Object} context.options.repositoryUrl The git repository URL.
    */
 
-  core.info(`GITHUB_SERVER_URL ${process.env.GITHUB_SERVER_URL}`)
-  core.info(`GITHUB_SERVER_URL ${process.env.GITHUB_REPOSITORY}`)
-
   const changelog = await releaseNotesGenerator.generateNotes({
     preset: 'angular',
     context: {
-      commits,
-      logger: {log: core.info.bind(core.info)},
+      commits: commits,
       lastRelease: {gitTag: latestTag.name},
       nextRelease: {gitTag: newTag, version: incrementedVersion},
       options: {
