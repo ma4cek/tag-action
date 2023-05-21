@@ -68,7 +68,7 @@ export default async function main(): Promise<void> {
         {type: 'style', release: 'patch'}
       ]
     },
-    {commits: commits, logger: core}
+    {commits: commits, logger: console}
   )
 
 // console.info.bind(console)
