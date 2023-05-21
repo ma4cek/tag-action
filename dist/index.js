@@ -78,16 +78,14 @@ function main() {
         core.info(`Previous tag was ${latestTag.name}, previous version was ${previousVersion.version}.`);
         core.setOutput('previous_version', previousVersion.version);
         core.setOutput('previous_tag', latestTag.name);
-        const cwd = process.cwd();
-        let bump = yield commitAnalyzer.analyzeCommits({
+        const bump = yield commitAnalyzer.analyzeCommits({
             releaseRules: [
                 { type: 'docs', scope: 'README', release: 'patch' },
                 { type: 'refactor', release: 'patch' },
                 { type: 'style', release: 'patch' }
             ]
         }, { commits: commits, logger: console });
-        // console.info.bind(console)
-        const incrementedVersion = (0, semver_1.inc)(previousVersion, 'patch');
+        const incrementedVersion = (0, semver_1.inc)(previousVersion, bump);
         if (!incrementedVersion) {
             core.setFailed('Could not increment version.');
             return;

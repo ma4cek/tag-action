@@ -58,9 +58,7 @@ export default async function main(): Promise<void> {
   core.setOutput('previous_version', previousVersion.version)
   core.setOutput('previous_tag', latestTag.name)
 
-  const cwd = process.cwd()
-
-  let bump = await commitAnalyzer.analyzeCommits(
+  const bump = await commitAnalyzer.analyzeCommits(
     {
       releaseRules: [
         {type: 'docs', scope: 'README', release: 'patch'},
@@ -71,9 +69,7 @@ export default async function main(): Promise<void> {
     {commits: commits, logger: console}
   )
 
-// console.info.bind(console)
-
-  const incrementedVersion = inc(previousVersion, 'patch')
+  const incrementedVersion = inc(previousVersion, bump)
 
   if (!incrementedVersion) {
     core.setFailed('Could not increment version.')
