@@ -1,10 +1,11 @@
 import * as core from '@actions/core'
 import {inc, parse, valid} from 'semver'
-import {getBranchFromRef, getLatestTag} from './utils'
-import {createTag} from './github'
+import {createTag, getBranchFromRef, getLatestTag, getCommits} from './github'
 
 export default async function main(): Promise<void> {
   const mainBranches: string[] = ['main', 'master']
+
+  const releaseNotesGenerator = require('@semantic-release/release-notes-generator')
 
   const tagPrefix = core.getInput('tag_prefix')
   const shouldFetchAllTags = core.getInput('fetch_all_tags')
@@ -42,6 +43,8 @@ export default async function main(): Promise<void> {
     return
   }
 
+  const commits = await getCommits(latestTag.commit.sha, commitRef)
+
   const previousVersion = parse(latestTag.name.replace(prefixRegex, ''))
 
   if (!previousVersion) {
@@ -73,6 +76,23 @@ export default async function main(): Promise<void> {
   const newTag = `${tagPrefix}${incrementedVersion}`
   core.info(`New tag after applying prefix is ${newTag}.`)
   core.setOutput('new_tag', newTag)
+
+  const changelog = await releaseNotesGenerator.generateNotes(
+    {
+      preset: 'conventionalcommits'
+    },
+    {
+      commits,
+      logger: {log: core.info.bind(core.info)},
+      options: {
+        repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
+      },
+      lastRelease: {gitTag: latestTag.name},
+      nextRelease: {gitTag: newTag, version: incrementedVersion}
+    }
+  )
+  core.info(`Changelog is ${changelog}.`)
+  core.setOutput('changelog', changelog)
 
   await createTag(newTag, commitRef)
 }
