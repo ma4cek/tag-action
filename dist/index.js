@@ -106,15 +106,12 @@ function main() {
          * @param {Object} context.nextRelease The next release with `gitHead` corresponding to the commit hash used to make the  release, the release `version` and `gitTag` corresponding to the git tag associated with `gitHead`.
          * @param {Object} context.options.repositoryUrl The git repository URL.
          */
-        const changelog = yield releaseNotesGenerator.generateNotes({
-            preset: 'angular',
-            context: {
-                commits: commits,
-                lastRelease: { gitTag: latestTag.name },
-                nextRelease: { gitTag: newTag, version: incrementedVersion },
-                options: {
-                    repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
-                }
+        const changelog = yield releaseNotesGenerator.generateNotes({ preset: 'angular' }, {
+            commits: commits,
+            lastRelease: { gitTag: latestTag.name },
+            nextRelease: { gitTag: newTag, version: incrementedVersion },
+            options: {
+                repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
             }
         });
         core.info(`Changelog is ${changelog}.`);
