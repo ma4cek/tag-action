@@ -68,8 +68,10 @@ export default async function main(): Promise<void> {
         {type: 'style', release: 'patch'}
       ]
     },
-    {commits: commits, logger: {log: console.info.bind(console)}}
+    {commits: commits, logger: {log: core.info.bind(core)}}
   )
+
+// console.info.bind(console)
 
   const incrementedVersion = inc(previousVersion, 'patch')
 

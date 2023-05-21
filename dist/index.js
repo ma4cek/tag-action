@@ -85,7 +85,8 @@ function main() {
                 { type: 'refactor', release: 'patch' },
                 { type: 'style', release: 'patch' }
             ]
-        }, { commits: commits, logger: { log: console.info.bind(console) } });
+        }, { commits: commits, logger: { log: core.info.bind(core) } });
+        // console.info.bind(console)
         const incrementedVersion = (0, semver_1.inc)(previousVersion, 'patch');
         if (!incrementedVersion) {
             core.setFailed('Could not increment version.');
