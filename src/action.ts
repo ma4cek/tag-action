@@ -58,6 +58,8 @@ export default async function main(): Promise<void> {
   core.setOutput('previous_version', previousVersion.version)
   core.setOutput('previous_tag', latestTag.name)
 
+  const cwd = process.cwd()
+
   let bump = await commitAnalyzer.analyzeCommits(
     {
       preset: 'angular',
@@ -67,7 +69,7 @@ export default async function main(): Promise<void> {
         {type: 'style', release: 'patch'}
       ]
     },
-    {commits: commits}
+    {commits: commits, cwd: cwd}
   )
 
   const incrementedVersion = inc(previousVersion, 'patch')
