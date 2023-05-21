@@ -99,8 +99,7 @@ export default async function main(): Promise<void> {
       lastRelease: {gitTag: latestTag.name},
       nextRelease: {gitTag: newTag, version: incrementedVersion},
       options: {
-        //repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
-        repositoryUrl: 'https://github.com/ma4cek/test/'
+        repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/`
       }
     }
   )
