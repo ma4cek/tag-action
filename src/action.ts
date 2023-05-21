@@ -98,9 +98,9 @@ export default async function main(): Promise<void> {
     },
     {
       commits,
-      options: {
+      /*options: {
         repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
-      },
+      },*/
       lastRelease: {gitTag: latestTag.name},
       nextRelease: {gitTag: newTag, version: incrementedVersion}
     }
