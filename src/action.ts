@@ -77,18 +77,33 @@ export default async function main(): Promise<void> {
   core.info(`New tag after applying prefix is ${newTag}.`)
   core.setOutput('new_tag', newTag)
 
+  /**
+   * Generate the changelog for all the commits in `options.commits`.
+   *
+   * @param {Object} pluginConfig The plugin configuration.
+   * @param {String} pluginConfig.preset conventional-changelog preset ('angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint').
+   * @param {String} pluginConfig.config Requireable npm package with a custom conventional-changelog preset
+   * @param {Object} pluginConfig.parserOpts Additional `conventional-changelog-parser` options that will overwrite ones loaded by `preset` or `config`.
+   * @param {Object} pluginConfig.writerOpts Additional `conventional-changelog-writer` options that will overwrite ones loaded by `preset` or `config`.
+   * @param {Object} context The semantic-release context.
+   * @param {Array<Object>} context.commits The commits to analyze.
+   * @param {Object} context.lastRelease The last release with `gitHead` corresponding to the commit hash used to make the last release and `gitTag` corresponding to the git tag associated with `gitHead`.
+   * @param {Object} context.nextRelease The next release with `gitHead` corresponding to the commit hash used to make the  release, the release `version` and `gitTag` corresponding to the git tag associated with `gitHead`.
+   * @param {Object} context.options.repositoryUrl The git repository URL.
+   */
+
   const changelog = await releaseNotesGenerator.generateNotes(
     {
-      preset: 'conventionalcommits'
+      preset: 'angular'
     },
     {
       commits,
       logger: {log: core.info.bind(core.info)},
+      lastRelease: {gitTag: latestTag.name},
+      nextRelease: {gitTag: newTag, version: incrementedVersion},
       options: {
         repositoryUrl: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}`
-      },
-      lastRelease: {gitTag: latestTag.name},
-      nextRelease: {gitTag: newTag, version: incrementedVersion}
+      }
     }
   )
   core.info(`Changelog is ${changelog}.`)
