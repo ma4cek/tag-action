@@ -62,7 +62,7 @@ export default async function main(): Promise<void> {
     {
       releaseRules: './.github/release-rules.js'
     },
-    {commits: commits, logger: console}
+    {commits: commits, logger: console, cwd: process.cwd()}
   )
 
   const incrementedVersion = inc(previousVersion, bump)

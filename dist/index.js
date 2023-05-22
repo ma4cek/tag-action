@@ -80,7 +80,7 @@ function main() {
         core.setOutput('previous_tag', latestTag.name);
         const bump = yield commitAnalyzer.analyzeCommits({
             releaseRules: './.github/release-rules.js'
-        }, { commits: commits, logger: console });
+        }, { commits: commits, logger: console, cwd: process.cwd() });
         const incrementedVersion = (0, semver_1.inc)(previousVersion, bump);
         if (!incrementedVersion) {
             core.setFailed('Could not increment version.');
