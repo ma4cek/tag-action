@@ -79,10 +79,7 @@ function main() {
         core.setOutput('previous_version', previousVersion.version);
         core.setOutput('previous_tag', latestTag.name);
         const bump = yield commitAnalyzer.analyzeCommits({
-            preset: 'angular',
-            parserOpts: {
-                noteKeywords: ['MAJOR', 'BREAKING CHANGE', 'BREAKING CHANGES']
-            }
+            preset: 'angular'
         }, { commits: commits, logger: console, cwd: process.cwd() });
         const incrementedVersion = (0, semver_1.inc)(previousVersion, bump);
         if (!incrementedVersion) {

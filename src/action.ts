@@ -60,10 +60,7 @@ export default async function main(): Promise<void> {
 
   const bump = await commitAnalyzer.analyzeCommits(
     {
-      preset: 'angular',
-      parserOpts: {
-        noteKeywords: ['MAJOR', 'BREAKING CHANGE', 'BREAKING CHANGES']
-      }
+      preset: 'angular'
     },
     {commits: commits, logger: console, cwd: process.cwd()}
   )
