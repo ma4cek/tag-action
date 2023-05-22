@@ -79,7 +79,7 @@ function main() {
         core.setOutput('previous_version', previousVersion.version);
         core.setOutput('previous_tag', latestTag.name);
         const bump = yield commitAnalyzer.analyzeCommits({
-            releaseRules: "./config/release-rules.js"
+            releaseRules: './.github/release-rules.js'
         }, { commits: commits, logger: console });
         const incrementedVersion = (0, semver_1.inc)(previousVersion, bump);
         if (!incrementedVersion) {
