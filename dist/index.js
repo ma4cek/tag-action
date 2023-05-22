@@ -80,7 +80,6 @@ function main() {
         core.setOutput('previous_tag', latestTag.name);
         const bump = yield commitAnalyzer.analyzeCommits({
             preset: 'angular',
-            releaseRules: [{ tag: 'MINOR', release: 'minor' }],
             parserOpts: {
                 noteKeywords: ['MAJOR', 'BREAKING CHANGE', 'BREAKING CHANGES']
             }
