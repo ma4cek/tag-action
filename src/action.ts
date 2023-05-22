@@ -60,11 +60,7 @@ export default async function main(): Promise<void> {
 
   const bump = await commitAnalyzer.analyzeCommits(
     {
-      releaseRules: [
-        {type: 'docs', scope: 'README', release: 'patch'},
-        {type: 'refactor', release: 'patch'},
-        {type: 'style', release: 'patch'}
-      ]
+      releaseRules: './config/release-rules.js'
     },
     {commits: commits, logger: console}
   )
