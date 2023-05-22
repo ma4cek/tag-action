@@ -60,9 +60,12 @@ export default async function main(): Promise<void> {
 
   const bump = await commitAnalyzer.analyzeCommits(
     {
-      releaseRules: './.github/release-rules.js'
+      releaseRules: [
+        {tag: 'MINOR', release: 'minor'},
+        {tag: 'MAJOR', release: 'major'}
+      ]
     },
-    {commits: commits, logger: console, cwd: process.cwd()}
+    {commits: commits, logger: console}
   )
 
   const incrementedVersion = inc(previousVersion, bump)

@@ -79,8 +79,11 @@ function main() {
         core.setOutput('previous_version', previousVersion.version);
         core.setOutput('previous_tag', latestTag.name);
         const bump = yield commitAnalyzer.analyzeCommits({
-            releaseRules: './.github/release-rules.js'
-        }, { commits: commits, logger: console, cwd: process.cwd() });
+            releaseRules: [
+                { tag: 'MINOR', release: 'minor' },
+                { tag: 'MAJOR', release: 'major' }
+            ]
+        }, { commits: commits, logger: console });
         const incrementedVersion = (0, semver_1.inc)(previousVersion, bump);
         if (!incrementedVersion) {
             core.setFailed('Could not increment version.');
