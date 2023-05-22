@@ -79,13 +79,12 @@ function main() {
         core.setOutput('previous_version', previousVersion.version);
         core.setOutput('previous_tag', latestTag.name);
         const bump = yield commitAnalyzer.analyzeCommits({
-            releaseRules: [
-                { tag: "MINOR", release: "minor" }
-            ],
+            preset: 'angular',
+            releaseRules: [{ tag: 'MINOR', release: 'minor' }],
             parserOpts: {
-                noteKeywords: ["MAJOR", "BREAKING CHANGE", "BREAKING CHANGES"]
+                noteKeywords: ['MAJOR', 'BREAKING CHANGE', 'BREAKING CHANGES']
             }
-        }, { commits: commits, logger: console });
+        }, { commits: commits, logger: console, cwd: process.cwd() });
         const incrementedVersion = (0, semver_1.inc)(previousVersion, bump);
         if (!incrementedVersion) {
             core.setFailed('Could not increment version.');

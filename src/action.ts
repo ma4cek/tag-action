@@ -60,12 +60,13 @@ export default async function main(): Promise<void> {
 
   const bump = await commitAnalyzer.analyzeCommits(
     {
+      preset: 'angular',
       releaseRules: [{tag: 'MINOR', release: 'minor'}],
       parserOpts: {
         noteKeywords: ['MAJOR', 'BREAKING CHANGE', 'BREAKING CHANGES']
       }
     },
-    {commits: commits, logger: console}
+    {commits: commits, logger: console, cwd: process.cwd()}
   )
 
   const incrementedVersion = inc(previousVersion, bump)
