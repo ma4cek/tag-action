@@ -3,7 +3,7 @@ import action from './action'
 
            async function run(): Promise<void> {
   try {
-    await action()
+    await action()    
 } catch (error) {
     if (error instanceof Error)
       core.setFailed(
