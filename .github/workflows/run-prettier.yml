@@ -13,13 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            src:
+            - 'src/**/*ts'
+            
       - name: Checkout
+        if: steps.changes.outputs.src == 'true'
         uses: actions/checkout@v3
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
           
       - name: Prettify
+        if: steps.changes.outputs.src == 'true'
         run: |
           npm install --silent
           npm run format
