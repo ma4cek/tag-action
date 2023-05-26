@@ -35,6 +35,8 @@ jobs:
           npm run format
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
-          git add *ts
-          git commit -m "Prettified files"
-          git push
+          if [[ -n "$(git status -s)" ]]; then
+            git add *ts
+            git commit -m "Prettified files"
+            git push
+          fi
