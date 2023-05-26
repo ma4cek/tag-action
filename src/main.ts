@@ -6,7 +6,7 @@ import action from './action'
     await action()
 } catch (error) {
     if (error instanceof Error)
-      core.setFailed(
+                     core.setFailed(
   `Action failed. Error: ${error.message}, Stack: ${error.stack}`
       )
   }
