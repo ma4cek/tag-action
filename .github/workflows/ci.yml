@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          # This is important to fetch the changes to the previous commit
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
 
       - name: Prettify code
