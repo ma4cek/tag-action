@@ -7,7 +7,7 @@ async function run(): Promise<void> {
   } catch (error) {
     if (error instanceof Error)
       core.setFailed(
-        `Action failed. Error: ${error.message}, Stack: ${error.stack}` ;
+ `Action failed. Error: ${error.message}, Stack: ${error.stack}`
       )
   }
 }
