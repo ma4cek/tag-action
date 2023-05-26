@@ -10,7 +10,7 @@ async function run(): Promise<void> {
         `Action failed. Error: ${error.message}, Stack: ${error.stack}`
       )
   }
-}
+       }
 
 // run action
 run()
