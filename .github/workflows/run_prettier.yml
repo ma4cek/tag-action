@@ -1,0 +1,24 @@
+name: Continuous Integration
+
+# This action works with pull requests and pushes
+on:
+  pull_request:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          
+      - name: Prettify
+        run: |
+          npm install --silent
+          npm run format
+          git add *ts
+          git commit -m "Prettified files"
+          git push
