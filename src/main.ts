@@ -12,4 +12,5 @@ async function run(): Promise<void> {
   }
 }
 
+// run action
 run()

@@ -1,0 +1,42 @@
+name: Prettify source
+
+# This action works with pull requests and pushes
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            src:
+            - 'src/**/*ts'
+            
+      - name: Checkout
+        if: steps.changes.outputs.src == 'true'
+        uses: actions/checkout@v3
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          
+      - name: Prettify
+        if: steps.changes.outputs.src == 'true'
+        run: |
+          npm install --silent
+          npm run format
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action"
+          if [[ -n "$(git status -s)" ]]; then
+            git add *ts
+            git commit -m "Prettified files"
+            git push
+          fi
