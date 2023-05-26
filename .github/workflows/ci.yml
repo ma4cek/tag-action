@@ -14,6 +14,7 @@ jobs:
         with:
           # This is important to fetch the changes to the previous commit
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
