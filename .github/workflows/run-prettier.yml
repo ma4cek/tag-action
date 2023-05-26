@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Prettify source
 
 # This action works with pull requests and pushes
 on:
@@ -19,6 +19,8 @@ jobs:
         run: |
           npm install --silent
           npm run format
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action"
           git add *ts
           git commit -m "Prettified files"
           git push
